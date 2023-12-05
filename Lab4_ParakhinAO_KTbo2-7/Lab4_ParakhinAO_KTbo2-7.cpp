@@ -1,4 +1,6 @@
-﻿#include <limits>
+﻿
+#include <limits>
+#include <vld.h>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -42,12 +44,11 @@ public:
     // Операция очистки элементов в векторе
     virtual void deleteContainer() = 0;
 
-    ~Container() {};
+    virtual ~Container() {};
 };
 
 class auxiVector : public Container {
 public:
-
     vector <Library> libVector;
 
     // Операция сортировки авторов по алфавиту и годов выпуска произведений по возрастанию
@@ -149,10 +150,10 @@ public:
 
 class auxiMap : public Container {
 public:
-    multimap<string, Library> libMap;
+        multimap<string, Library> libMap;
 
-    // Операция сортировки ассоциативного массива по значению
-    void sortContainer() override {
+        // Операция сортировки ассоциативного массива по значению
+        void sortContainer() override {
         // Приведение multimap к vector для sort
         vector <pair<string, Library>> temp(this->libMap.begin(), this->libMap.end());
 
@@ -282,8 +283,10 @@ public:
         switch (Ch) {
         case 'V':
             return new auxiVector();
+            break;
         case 'M':
             return new auxiMap();
+            break;
         default: throw 2;
         }
     }
